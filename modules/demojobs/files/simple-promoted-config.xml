@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>&lt;strong&gt;This job will alternately succeed or fail. Successful builds will be promoted&lt;/strong&gt;&#xd;
+&lt;br/&gt;&#xd;
+&lt;br/&gt;&#xd;
+This job also demonstrates shebangs in the &quot;Execute Shell&quot; build step</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.promoted__builds.JobPropertyImpl>
+      <activeProcessNames>
+        <string>Release</string>
+        <string>Release Candidate</string>
+      </activeProcessNames>
+    </hudson.plugins.promoted__builds.JobPropertyImpl>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash -xe
+## This uses &quot;-xe&quot; to emulate standard behavior wherein the job will be
+## failed if any of the commands invoked in the Execute Shell build step
+## return a non-zero status code
+
+
+expr $BUILD_NUMBER % 2
+
+if [ $? -eq 0 ]; then
+  # An odd number!
+  exit 0;
+else
+  # An even number, boo!
+  exit 1;
+fi;
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper/>
+  </buildWrappers>
+</project>

@@ -8,6 +8,7 @@ node default {
 
   class {
     'jenkins' : ;
+    'demojobs': ;
   }
 
   jenkins::plugin {
