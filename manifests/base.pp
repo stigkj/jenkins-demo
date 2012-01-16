@@ -5,21 +5,50 @@ node default {
       ensure => present;
   }
 
+  package {
+    'git-core' :
+      ensure => present;
+    'ruby1.9' :
+      ensure => present;
+    'rubygems1.9' :
+      ensure => present;
+    'rcov' :
+      ensure => present;
+    'rake' :
+      ensure => present;
+  }
 
   class {
-    'jenkins' : ;
+    'jenkins' :
+      require => Package['git-core'];
     'demojobs': ;
   }
 
   jenkins::plugin {
+    # Source Control
     'git' : ;
-    'beer' : ;
+
+    # Workflow
     'promoted-builds' : ;
+    'claim' : ;
+    'scriptler' : ;
+    'managed-scripts' : ;
+
+    # Running jobs
     'join' : ;
     'pathignore' : ;
     'cobertura' : ;
-    'claim' : ;
     'build-timeout' : ;
+    'warnings' : ;
+    'violations' : ;
+
+    # Just for fun
+    'beer' : ;
+
+    # Display plugins
     'ansicolor' : ;
+    'radiatorviewplugin' : ;
+    'xfpanel' : ;
+    'statusmonitor' : ;
   }
 }
